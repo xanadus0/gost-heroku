@@ -1,14 +1,13 @@
-FROM alpine:3.6
+FROM alpine:latest
 
-ENV VER=2.11.0 METHOD=chacha20 PASSWORD=ss123456
+ENV VER=2.11.1 METHOD=chacha20 PASSWORD=ss123456
 ENV TLS_PORT=4433 PORT=8080
 
-RUN apk add --no-cache curl \
-  && curl -sL https://github.com/xiaokaixuan/gost-heroku/releases/download/v${VER}/gost_${VER}_linux_amd64.tar.gz | tar zx \
-  && mv gost_${VER}_linux_amd64 gost && chmod a+x gost/gost
+RUN apk add --no-cache curl gzip ca-certificates libc6-compat libgcc libstdc++ \
+  && curl -sL https://github.com/ginuerzh/gost/releases/download/v2.11.1/gost-linux-amd64-2.11.1.gz | gzip -d gost \
+  && chmod a+x gost/gost-linux-amd64
 
 WORKDIR /gost
 EXPOSE ${TLS_PORT} $PORT
 
-CMD exec /gost/gost -L=tls://:${TLS_PORT}/:$PORT -L=ss+mws://$METHOD:$PASSWORD@:$PORT
-
+CMD exec /gost/gost-linux-amd64 -L=tls://:${TLS_PORT}/:$PORT -L=ss+mws://$METHOD:$PASSWORD@:$PORT
