@@ -1,6 +1,6 @@
 FROM alpine:latest
 
-ENV VER=2.11.1 METHOD=chacha20 PASSWORD=ss123456
+ENV VER=2.11.1 METHOD=AEAD_CHACHA20_POLY1305 PASSWORD=ss123456
 ENV TLS_PORT=4433 PORT=8080
 
 RUN apk add --no-cache wget gzip libc6-compat libgcc libstdc++ \
