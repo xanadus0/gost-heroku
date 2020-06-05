@@ -10,4 +10,4 @@ RUN apk add --no-cache wget gzip libc6-compat libgcc libstdc++ \
 WORKDIR /
 EXPOSE ${TLS_PORT} $PORT
 
-CMD exec /gost-linux-amd64-${VER} -L=tls://:${TLS_PORT}/:$PORT -L=ss+mws://$METHOD:$PASSWORD@:$PORT
+CMD exec /gost-linux-amd64-${VER} -L=tls://:${TLS_PORT}/:$PORT -L=ss+ws://$METHOD:$PASSWORD@:$PORT
